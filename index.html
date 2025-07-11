@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/style.css">
+    <title>FlowState - FPV RC Plane Simulator</title>
+  </head>
+  <body>
+    <div id="fps" class="hud" style="bottom: 20px; right: 20px; left: auto; top: auto; text-align: right;">
+        <p>FPS: <span id="fps-value">0</span></p>
+    </div>
+    <div class="hud">
+        <p>Speed: <span id="speed">0.0</span> m/s</p>
+        <p>Altitude: <span id="altitude">0.0</span> m</p>
+        <p>Throttle: <span id="throttle">0</span>%</p>
+        <p>G-Force: <span id="gforce">1.0</span>g</p>
+    </div>
+
+    <div class="horizon-container">
+        <div id="horizon"></div>
+        <div id="plane-icon"></div>
+    </div>
+
+    <div class="controls-display">
+        <p><strong>CONTROLS:</strong></p>
+        <p>W/S - Throttle</p>
+        <p>←/→ - Roll</p>
+        <p>↑/↓ - Pitch</p>
+        <p>A/D - Yaw</p>
+        <p>C - Change Camera</p>
+        <p>R - Reset Plane</p>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

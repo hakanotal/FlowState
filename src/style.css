@@ -1,0 +1,64 @@
+body { margin: 0; overflow: hidden; background-color: #000; }
+      canvas { display: block; }
+      .dg.ac { 
+          position: absolute !important; 
+          top: 20px !important; 
+          left: 20px !important; 
+          right: auto !important; 
+      }
+      .hud {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          font-family: 'Courier New', Courier, monospace;
+          color: #00ff00;
+          background-color: rgba(0, 0, 0, 0.3);
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid #00ff00;
+          text-align: right;
+      }
+      .hud p { margin: 0 0 5px 0; font-size: 16px; }
+      .controls-display {
+          position: absolute;
+          bottom: 20px;
+          left: 20px;
+          font-family: 'Courier New', Courier, monospace;
+          color: #00ff00;
+          background-color: rgba(0, 0, 0, 0.3);
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid #00ff00;
+      }
+      .horizon-container {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 100px;
+          height: 100px;
+          border: 2px solid #00ff00;
+          border-radius: 50%;
+          overflow: hidden;
+          /* make transparent */
+          background-color: transparent;
+          opacity: 0.3;
+      }
+      #horizon {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          transition: transform 0.1s linear;
+          background: linear-gradient(to bottom, #87CEEB 50%, #8B4513 50%);
+      }
+      #plane-icon {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M90 48 H 60 V 20 L 50 10 L 40 20 V 48 H 10 L 10 52 H 40 V 80 L 50 90 L 60 80 V 52 H 90 Z' fill='yellow' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+          background-size: 60%;
+          background-position: center;
+          background-repeat: no-repeat;
+      }
