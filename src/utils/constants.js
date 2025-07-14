@@ -45,11 +45,11 @@ export const PHYSICS_CONFIG = {
 export const RENDER_CONFIG = {
     antialias: true,
     shadowMapSize: 2048,
-    clearColor: 0x87CEEB, // Black fallback (skybox will replace this)
+    clearColor: 0x000000,
     ambientLightColor: 0x666666,
     directionalLightColor: 0xffffff,
     directionalLightIntensity: 0.7,
-    fogColor: 0x87CEEB, // Lighter blue for better sky blending
+    fogColor: 0xa0c8a0,
     fogNear: 64,
     fogFar: 256,
 };

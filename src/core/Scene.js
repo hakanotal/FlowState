@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 import { RENDER_CONFIG } from '../utils/constants.js';
+import skyboxImgUrl from '/puresky_1k.exr';
 
 export function setupScene() {
     // Scene
@@ -13,7 +14,7 @@ export function setupScene() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.0;
+    renderer.toneMappingExposure = 0.8;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     document.body.appendChild(renderer.domElement);
 
@@ -21,7 +22,7 @@ export function setupScene() {
     const loader = new EXRLoader();
     let directionalLight;
     
-    loader.load('/puresky_1k.exr', function(texture) {
+    loader.load(skyboxImgUrl, function(texture) {
         // Setup skybox
         texture.mapping = THREE.EquirectangularReflectionMapping;
         scene.background = texture;
@@ -93,7 +94,7 @@ export function setupScene() {
     }
 
     // Reduced fog since we have a proper skybox now
-    scene.fog = new THREE.Fog(RENDER_CONFIG.fogColor, RENDER_CONFIG.fogNear * 2, RENDER_CONFIG.fogFar * 1.5);
+    scene.fog = new THREE.Fog(RENDER_CONFIG.fogColor, RENDER_CONFIG.fogNear, RENDER_CONFIG.fogFar);
 
     return {
         scene,
