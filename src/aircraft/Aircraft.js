@@ -41,15 +41,36 @@ export class Aircraft {
             new THREE.MeshStandardMaterial({ color: 0xff0000 })
         );
         const wings = new THREE.Mesh(
-            new THREE.BoxGeometry(8, 0.2, 2), 
+            new THREE.BoxGeometry(8, 0.2, 1.9), 
             new THREE.MeshStandardMaterial({ color: 0xcccccc })
         );
         const tail = new THREE.Mesh(
-            new THREE.BoxGeometry(0.2, 1, 2), 
+            new THREE.BoxGeometry(0.2, 1, 1.5), 
             new THREE.MeshStandardMaterial({ color: 0xcccccc })
         );
         tail.position.set(0, 0.5, 2);
-        this.planeGroup.add(fuselage, wings, tail);
+        
+        // Create flaps for each wing
+        this.leftFlap = new THREE.Mesh(
+            new THREE.BoxGeometry(1.5, 0.1, 0.5),
+            new THREE.MeshStandardMaterial({ color: 0x888888 })
+        );
+        this.leftFlap.position.set(-2.5, 0, 1); // Left wing position
+        
+        this.rightFlap = new THREE.Mesh(
+            new THREE.BoxGeometry(1.5, 0.1, 0.5),
+            new THREE.MeshStandardMaterial({ color: 0x888888 })
+        );
+        this.rightFlap.position.set(2.5, 0, 1); // Right wing position
+        
+        // Create yaw flap (rudder) on vertical tail
+        this.yawFlap = new THREE.Mesh(
+            new THREE.BoxGeometry(0.1, 0.8, 0.4),
+            new THREE.MeshStandardMaterial({ color: 0x666666 })
+        );
+        this.yawFlap.position.set(0, 0.5, 3); // On the vertical tail
+        
+        this.planeGroup.add(fuselage, wings, tail, this.leftFlap, this.rightFlap, this.yawFlap);
         this.planeGroup.castShadow = true;
         this.scene.add(this.planeGroup);
     }
@@ -151,6 +172,33 @@ export class Aircraft {
         this.lastPosition.copy(currentPos);
     }
     
+    updateFlaps() {
+        // Maximum flap deflection in radians
+        const maxFlapDeflection = Math.PI / 8;
+        
+        // Calculate flap positions based on controls
+        // For roll: differential flap movement (ailerons)
+        // For pitch: both flaps move together (elevators)
+        
+        const rollInput = this.controls.roll;
+        const pitchInput = this.controls.pitch;
+        
+        // Left flap rotation: roll effect + pitch effect
+        const leftFlapRotation = (-rollInput * maxFlapDeflection) + (pitchInput * maxFlapDeflection * 0.5);
+        
+        // Right flap rotation: opposite roll effect + pitch effect
+        const rightFlapRotation = (rollInput * maxFlapDeflection) + (pitchInput * maxFlapDeflection * 0.5);
+        
+        // Apply rotations around the X-axis (flap hinge)
+        this.leftFlap.rotation.x = leftFlapRotation;
+        this.rightFlap.rotation.x = rightFlapRotation;
+        
+        // Yaw flap (rudder) control - rotates around Y-axis
+        const yawInput = this.controls.yaw;
+        const yawFlapRotation = -yawInput * maxFlapDeflection;
+        this.yawFlap.rotation.y = yawFlapRotation;
+    }
+    
     checkCrash() {
         const groundHeight = this.terrain.getHeightAt(this.planeBody.position.x, this.planeBody.position.z) || 0;
         if (this.planeBody.position.y < groundHeight + 1.0) {
@@ -169,6 +217,7 @@ export class Aircraft {
         this.updateControls();
         this.applyAerodynamics();
         this.updateStuckDetection(deltaTime);
+        this.updateFlaps(); // Call the new method here
         this.checkCrash();
         
         // Sync visual model with physics body

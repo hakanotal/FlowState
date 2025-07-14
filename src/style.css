@@ -36,7 +36,7 @@ canvas {
 .controls-display {
     position: absolute;
     bottom: 20px;
-    left: 20px;
+    right: 20px;
     font-family: 'Courier New', Courier, monospace;
     color: #00ff00;
     background-color: rgba(0, 0, 0, 0.3);
